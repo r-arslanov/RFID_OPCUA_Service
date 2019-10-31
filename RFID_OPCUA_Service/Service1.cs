@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Linq;
+﻿using Microsoft.Win32;
 using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RFID_OPCUA_Service
 {
@@ -19,6 +12,12 @@ namespace RFID_OPCUA_Service
 
         protected override void OnStart(string[] args)
         {
+            RegistryKey cu = Registry.CurrentUser;
+            RegistryKey software = cu.OpenSubKey("Software", true);
+            RegistryKey rfidKey = software.CreateSubKey("RFID", true);
+            rfidKey.SetValue("testPar", "testVal123");
+            rfidKey.Close();
+            software.Close();
         }
 
         protected override void OnStop()
