@@ -1,15 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Timers;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.Win32;
-using Opc.Ua.Client;
-using Siemens.UAClientHelper;
-using Opc.Ua;
-using RfidOpcUaForm;
-using System.Xml;
 
 namespace RFID_OPCUA_Service.AdditionalClasses
 {
@@ -20,18 +10,33 @@ namespace RFID_OPCUA_Service.AdditionalClasses
         RegistryKey rfidKey;
         RegistryKey software;
         RegistryKey configData;
+        RegistryKey argsKey;
 
         List<RF680R> listRF;
         #endregion
 
         public ServiceWorker()
         {
-            RegistryKey cu = Registry.CurrentUser;
-            software = cu.OpenSubKey("Software", true);
-            rfidKey = software.CreateSubKey("RFID", true);
-            configData = rfidKey.OpenSubKey("config", true);
             listRF = new List<RF680R>();
 
+            RegistryKey cu = Registry.CurrentUser;
+
+            software = cu.OpenSubKey("Software", true);
+            rfidKey = software.CreateSubKey("RFID", true);
+
+            argsKey = rfidKey.CreateSubKey("args", true);
+            configData = rfidKey.OpenSubKey("config", true);
+        }
+
+        public void startScan()
+        {
+            int num = (int)argsKey.GetValue("num");
+            listRF[num].startScan(rfidKey);
+        }
+        public void stopScan()
+        {
+            int num = (int)argsKey.GetValue("num");
+            listRF[0].stopScan(rfidKey);
         }
 
         public void init()
