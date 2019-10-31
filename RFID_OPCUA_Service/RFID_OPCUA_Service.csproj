@@ -295,6 +295,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdditionalClasses\RF680R.cs" />
+    <Compile Include="AdditionalClasses\ServiceWorker.cs" />
     <Compile Include="Service1.cs">
       <SubType>Component</SubType>
     </Compile>
