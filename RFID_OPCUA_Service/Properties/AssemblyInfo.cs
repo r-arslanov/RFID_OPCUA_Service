@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // общие сведения об этой сборке.
 [assembly: AssemblyTitle("RFID_OPCUA_Service")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Служба для работы с RF600")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("АО Сибком")]
 [assembly: AssemblyProduct("RFID_OPCUA_Service")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
