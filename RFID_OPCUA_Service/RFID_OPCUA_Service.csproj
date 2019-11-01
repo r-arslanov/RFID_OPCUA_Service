@@ -295,20 +295,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdditionalClasses\RF680R.cs" />
+    <Compile Include="AdditionalClasses\RF600.cs" />
     <Compile Include="AdditionalClasses\ServiceWorker.cs" />
-    <Compile Include="Service1.cs">
+    <Compile Include="RFIDCOMSERVICE.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Service1.Designer.cs">
-      <DependentUpon>Service1.cs</DependentUpon>
+    <Compile Include="RFIDCOMSERVICE.Designer.cs">
+      <DependentUpon>RFIDCOMSERVICE.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SimaticClasses\UAAutoIDDataTypes.cs" />
-    <Compile Include="SimaticClasses\UAAutoIDIdentifiers.cs" />
-    <Compile Include="SimaticClasses\UAClientHelperAPI.cs" />
-    <Compile Include="SimaticClasses\UAGetRfidMethodIdentifiers.cs" />
+    <Compile Include="SiemensClasses\UAAutoIDDataTypes.cs" />
+    <Compile Include="SiemensClasses\UAAutoIDIdentifiers.cs" />
+    <Compile Include="SiemensClasses\UAClientHelperAPI.cs" />
+    <Compile Include="SiemensClasses\UAGetRfidMethodIdentifiers.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
