@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Win32;
+using System.Timers;
+using System;
 
 namespace RFID_OPCUA_Service.AdditionalClasses
 {
@@ -11,6 +13,8 @@ namespace RFID_OPCUA_Service.AdditionalClasses
         RegistryKey configData;
         RegistryKey argsKey;
 
+
+        Timer tm;
         List<RF600> listRF;
         #endregion
         // Конструктор
@@ -54,6 +58,11 @@ namespace RFID_OPCUA_Service.AdditionalClasses
         // Инициализация считывателей при запуске службы
         public void init()
         {
+            tm = new Timer(2000);
+            tm.Elapsed += reconnectOPC;
+            tm.Enabled = true;
+            tm.AutoReset = false;
+
             // Считывание параметров из реестра
             List<string> ip_list = new List<string>(configData.GetValue("ipPort") as string[]); // Список IP адресов
             List<string> nm_list = new List<string>(configData.GetValue("name") as string[]);   // Список наименований (Должны быть уникальны, нет дополнительной проверки)
@@ -66,7 +75,6 @@ namespace RFID_OPCUA_Service.AdditionalClasses
             foreach(var rfid in listRF)
             {
                 rfid.connectOPC();
-                rfid.startScan();
             }
         }
         // Закрытие соедининий с реесторм 
@@ -76,12 +84,34 @@ namespace RFID_OPCUA_Service.AdditionalClasses
             {
                 rfid.stopScan();
             }
-
+            tm.Dispose();
             rfidKey.Close();
             software.Close();
         }
 
-        
+        private void reconnectOPC(Object source, ElapsedEventArgs e)
+        {
+            List<RF600> nc = null;
+            nc = listRF.FindAll(x => !x.connected);
+            if (nc.Count > 0)
+            {
+                foreach (RF600 rf in listRF)
+                {
+                    rf.connectOPC();
+                    if (rf.connected)
+                        rfidKey.SetValue("Debug", "Reconnect rfid | " + e.SignalTime);
+                    else
+                        rfidKey.SetValue("Debug", "Err reconnect rfid | " + e.SignalTime);
+
+                }
+                tm.Start();
+            }
+            else
+            {
+                rfidKey.SetValue("Debug", "All connected | " + e.SignalTime);
+            }
+            
+        }
 
     }
 

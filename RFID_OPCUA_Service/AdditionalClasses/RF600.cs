@@ -25,8 +25,10 @@ namespace RFID_OPCUA_Service.AdditionalClasses
         RegistryKey resultKey;      // Ключ реестра для результата выполненного метода
 
         ushort rfidNamespaceIdx;    // Пространство имен считывателя (От Siemens, без него не работает)
-        #endregion
 
+        public  bool connected = false;
+        #endregion
+     
         #region Constructor
         public RF600(string url, string name = "One")
         {
@@ -65,20 +67,9 @@ namespace RFID_OPCUA_Service.AdditionalClasses
                 // Запрос методов и пространства имен
                 myRfidMethodIdentifiers = new UARfidMethodIdentifiers(myHelperApi);
                 rfidNamespaceIdx = GetRfidNamespaceIndex();
-
-                /* Не используется
-                 * TODO: Доделать подписку (Продумать дальнейшее использование подписки)
-                try
-                {
-                    rfidKey.SetValue("Debug", url + " | Success subscribe");
-                }
-                catch
-                {
-                    rfidKey.SetValue("Debug", url + " | Error subscribe");
-                }
-                */
             }
 
+            this.connected =  (myHelperApi.Session != null && myHelperApi.Session.Connected);
 
         }
 
